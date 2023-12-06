@@ -25,7 +25,7 @@ class Adapter(var context:Context,var arraylist: List<UsersItem> ):
     }
 
     override fun getItemCount(): Int {
-     return arraylist.size
+     return arraylist.count()
     }
 
     override fun onBindViewHolder(holder: viewholder, position: Int) {

@@ -2,6 +2,7 @@ package com.pavan.retrofitkotlin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pavan.retrofitkotlin.Interfaces.ApiInterface
@@ -30,21 +31,28 @@ class MainActivity : AppCompatActivity() {
 
     private fun getalldata() {
          val Retrofit = Retrofit.Builder()
-             .baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).
-             build().create(ApiInterface::class.java)
-        var retrodata = Retrofit.getdata()
+             .baseUrl(BASE_URL)
+             .addConverterFactory(GsonConverterFactory.create())
+             .build()
+             .create(ApiInterface::class.java)
+
+        val retrodata = Retrofit.getdata()
+
         retrodata.enqueue(object : Callback<List<UsersItem>>{
             override fun onResponse(
                 call: Call<List<UsersItem>>,
                 response: Response<List<UsersItem>>
             ) {
-                val data = response.body()!!
-                myadapter = Adapter(baseContext, data)
-                rvview.adapter = myadapter
+                val data = response.body()
+                    if(data != null){
+                        myadapter = Adapter(baseContext, data)
+                        rvview.adapter = myadapter
+                        Log.d("data", data.toString())
+                    }
             }
 
             override fun onFailure(call: Call<List<UsersItem>>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d("Mainactivity","error occured")
             }
 
         })

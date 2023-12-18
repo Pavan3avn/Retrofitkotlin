@@ -1,5 +1,6 @@
 package com.pavan.retrofitkotlin
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -31,5 +32,12 @@ class Adapter(var context:Context,var arraylist: List<UsersItem> ):
     override fun onBindViewHolder(holder: viewholder, position: Int) {
        Glide.with(context).load(arraylist[position].avatar_url).into(holder.img)
         holder.tv.text = arraylist[position].login
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updatedata(data: List<UsersItem>) {
+        arraylist = data
+        notifyDataSetChanged()
+
     }
 }

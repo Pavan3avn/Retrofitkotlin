@@ -1,5 +1,6 @@
 package com.pavan.retrofitkotlin
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var rvview:RecyclerView
     lateinit var myadapter:Adapter
-    var BASE_URL = "https://api.github.com"
+    var BASE_URL = "https://api.github.com/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,8 @@ class MainActivity : AppCompatActivity() {
 
          rvview = findViewById(R.id.recylerview)
          rvview.layoutManager = LinearLayoutManager(this)
+         myadapter = Adapter(this, emptyList()) // You can pass an empty list for now
+         rvview.adapter = myadapter
         getalldata()
     }
 
@@ -43,10 +46,9 @@ class MainActivity : AppCompatActivity() {
                 call: Call<List<UsersItem>>,
                 response: Response<List<UsersItem>>
             ) {
-                val data = response.body()
+                var data = response.body()
                     if(data != null){
-                        myadapter = Adapter(baseContext, data)
-                        rvview.adapter = myadapter
+                        myadapter.updatedata(data)
                         Log.d("data", data.toString())
                     }
             }

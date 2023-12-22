@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pavan.retrofitkotlin.models.UsersItem
+import retrofit2.Response
 
 class Adapter(var context:Context,var arraylist: List<UsersItem> ):
     RecyclerView.Adapter<Adapter.viewholder>() {
